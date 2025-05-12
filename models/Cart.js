@@ -48,7 +48,7 @@ cartSchema.pre('save', async function (next) {
           if (item.product && !item.isSavedForLater) {
             const price = item.product.discountPrice || item.product.price;
             total += price * item.quantity;
-            console.log("Check 2", price); // Debugging log
+            //console.log("Check 2", price); // Debugging log
           }
         });
   

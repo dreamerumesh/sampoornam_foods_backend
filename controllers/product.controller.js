@@ -17,7 +17,7 @@ const getBucket = () => {
 exports.createProduct = async (req, res, next) => {
   try {
     if (!req.files || req.files.length === 0) {
-      console.log("Files check")
+      //console.log("Files check")
       return res.status(400).json({ error: 'At least one product image is required' });
     }
 
@@ -57,9 +57,9 @@ exports.createProduct = async (req, res, next) => {
       stock: stock ? Number(stock) : 0,
       images: []
     });
-    console.log("This is checking ");
-    console.log(req.files); // array of files
-    console.log(req.body);  // form fields
+    //console.log("This is checking ");
+    //console.log(req.files); // array of files
+    //console.log(req.body);  // form fields
 
     // Process each image file
     const uploadPromises = req.files.map((file, index) => {

@@ -8,7 +8,7 @@ const initGridFS = () => {
   let bucket;
   conn.once('open', () => {
     bucket = new GridFSBucket(conn.db, { bucketName: 'uploads' });
-    console.log('GridFS initialized');
+    //console.log('GridFS initialized');
   });
 };
 
