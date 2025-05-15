@@ -2,6 +2,43 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const embeddedAddressSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, 'Name is required']
+  },
+  addressLine1: {
+    type: String,
+    required: [true, 'Address line 1 is required']
+  },
+  addressLine2: {
+    type: String,
+    default: ''
+  },
+  city: {
+    type: String,
+    required: [true, 'City is required']
+  },
+  state: {
+    type: String,
+    required: [true, 'State is required']
+  },
+  pincode: {
+    type: String,
+    required: [true, 'Pincode is required']
+  },
+  country: {
+    type: String,
+    required: [true, 'Country is required'],
+    default: 'India'
+  },
+  phone: {
+    type: String,
+    required: [true, 'Phone number is required']
+  }
+}, { _id: false });
+
+
 const historyItemSchema = new Schema({
   name: {
     type: String,
@@ -30,7 +67,7 @@ const historySchema = new Schema({
     required: true
   },
   address: {
-    type: [String],
+    type: embeddedAddressSchema,
     required: true
   },
   phone: {

@@ -3,6 +3,8 @@ const config = require('../config/default');
 
 const sendEmail = async ({ to, subject, html }) => {
     try {
+        console.log("Email",config.EMAIL_USER);
+        console.log("Email",config.EMAIL_PASS);
         let transporter = nodemailer.createTransport({
             service: config.EMAIL_SERVICE,
             host: config.EMAIL_HOST,

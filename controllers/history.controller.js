@@ -12,10 +12,19 @@ const { ObjectId } = mongoose.Types;
 // @access  Private
 exports.placeOrder = async (req, res, next) => {
   try {
-    const { address } = req.body;
+    const {
+      name,
+      addressLine1,
+      addressLine2,
+      city,
+      state,
+      pincode,
+      country,
+      phone
+    } = req.body;
     const userId = req.user.id;
 
-   
+    console.log("name", name);
     // Get user cart
     const cart = await Cart.findOne({ user: userId }).populate('items.product');
     
@@ -63,7 +72,16 @@ exports.placeOrder = async (req, res, next) => {
       user: userId,
       items: historyItems,
       total,
-      address,
+      address: {
+        name,
+        addressLine1,
+        addressLine2,
+        city,
+        state,
+        pincode,
+        country,
+        phone
+      },
       phone: user.phone,
       status: 'ordered'
     });
@@ -256,24 +274,27 @@ exports.getOrderHistory = async (req, res, next) => {
         }
 
         // Fetch address using order.addressId (adjust path if needed)
-        let fullAddress = null;
-        let addressId = new ObjectId(order.address[0]);
+
+        // let fullAddress = null;
+        // let addressId = new ObjectId(order.address[0]);
+
          //console.log(addressId);
-        try {
-          fullAddress = await Address.findOne(
-            { user: userId, "addresses._id": addressId },
-            { "addresses.$": 1 }
-          );
+
+        // try {
+        //   fullAddress = await Address.findOne(
+        //     { user: userId, "addresses._id": addressId },
+        //     { "addresses.$": 1 }
+        //   );
             
-         fullAddress = fullAddress.addresses[0];
-        } catch (err) {
-          console.error(`Failed to fetch address for order ${order._id}:`, err);
-        }
+        //  fullAddress = fullAddress.addresses[0];
+        // } catch (err) {
+        //   console.error(`Failed to fetch address for order ${order._id}:`, err);
+        // }
 
         return {
           ...order._doc,         // Include all order fields
           canCancel,             // Add cancel logic
-          address: fullAddress   // Replace or add address field
+          //address: fullAddress   // Replace or add address field
         };
       })
     );
@@ -306,22 +327,21 @@ exports.getAllOrders = async (req, res, next) => {
         const userId = order.user._id;
         const addressId = order.address[0];
 
-        let fullAddress = null;
+        // let fullAddress = null;
 
-        if (mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(addressId)) {
-          const addressDoc = await Address.findOne(
-            { user: userId, "addresses._id": addressId },
-            { "addresses.$": 1 }
-          );
+        // if (mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(addressId)) {
+        //   const addressDoc = await Address.findOne(
+        //     { user: userId, "addresses._id": addressId },
+        //     { "addresses.$": 1 }
+        //   );
 
-          if (addressDoc && addressDoc.addresses.length > 0) {
-            fullAddress = addressDoc.addresses[0];
-          }
-        }
+        //   if (addressDoc && addressDoc.addresses.length > 0) {
+        //     fullAddress = addressDoc.addresses[0];
+        //   }
+        // }
 
         return {
-          ...order._doc,
-          address:fullAddress
+          ...order._doc
         };
       })
     );

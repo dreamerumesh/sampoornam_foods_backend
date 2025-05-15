@@ -35,7 +35,10 @@ exports.createProduct = async (req, res, next) => {
       featured,
       stock
     } = req.body;
-    
+    console.log(name);
+    console.log(description);
+    console.log(price);
+    console.log(category);
     // Validate required fields
     if (!name) return res.status(400).json({ error: 'name is required' });
     if (!description) return res.status(400).json({ error: 'description is required' });

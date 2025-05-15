@@ -15,8 +15,14 @@ router.post(
   '/place-order',
   [
     auth,
-    check('address', 'Shipping address is required').not().isEmpty()
-  ],
+    check('name', 'Name is required').notEmpty(),
+    check('addressLine1', 'Address Line 1 is required').notEmpty(),
+    check('city', 'City is required').notEmpty(),
+    check('state', 'State is required').notEmpty(),
+    check('pincode', 'Pincode is required').notEmpty(),
+    check('phone', 'Phone number is required').notEmpty().isMobilePhone()
+  ]
+  ,
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
