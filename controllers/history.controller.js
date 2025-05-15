@@ -322,34 +322,10 @@ exports.getAllOrders = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .populate("user", "name email");
 
-    const enhancedOrders = await Promise.all(
-      orders.map(async (order) => {
-        const userId = order.user._id;
-        const addressId = order.address[0];
-
-        // let fullAddress = null;
-
-        // if (mongoose.Types.ObjectId.isValid(userId) && mongoose.Types.ObjectId.isValid(addressId)) {
-        //   const addressDoc = await Address.findOne(
-        //     { user: userId, "addresses._id": addressId },
-        //     { "addresses.$": 1 }
-        //   );
-
-        //   if (addressDoc && addressDoc.addresses.length > 0) {
-        //     fullAddress = addressDoc.addresses[0];
-        //   }
-        // }
-
-        return {
-          ...order._doc
-        };
-      })
-    );
-
     res.status(200).json({
       success: true,
-      count: enhancedOrders.length,
-      data: enhancedOrders
+      count: orders.length,
+      data: orders
     });
   } catch (error) {
     console.error("Error fetching all orders:", error);
