@@ -20,7 +20,10 @@ const addressRoutes = require('./routes/address.routes');
 // Initialize app
 const app = express();
 app.use(cookieParser());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URL,
+              methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+              allowedHeaders: ["Content-Type", "Authorization"],
+              credentials: true }));
 
 // Connect to database
 connectDB();
